@@ -5,7 +5,7 @@ contract PeliCoin {
     
     mapping(address => uint256) balances;
     address public owner;
-
+//  fdngkjlgnsidjon
     constructor(){
         owner = msg.sender;
     }
