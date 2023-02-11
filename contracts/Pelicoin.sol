@@ -1,12 +1,14 @@
-// SPDX-License-Identifier: GPL-3.0
-pragma solidity ^0.8.0;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.9;
 
-contract PeliCoin {
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+
+contract PeliCoin is ERC20{
     
     mapping(address => uint256) balances;
     address public owner;
 
-    constructor(){
+    constructor() ERC20("PeliCoin", "PLC"){
         owner = msg.sender;
     }
 
