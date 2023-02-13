@@ -2,27 +2,16 @@
 pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract PeliCoin is ERC20{
+contract PeliCoin is ERC20, Ownable{
     
-    mapping(address => uint256) balances;
-    address public owner;
-
-    constructor() ERC20("PeliCoin", "PLC"){
-        owner = msg.sender;
+    constructor() ERC20("PeliCoin", "PLC") {
+        _mint(msg.sender, 25000 * 10 ** decimals());
     }
 
-    modifier onlyOwner{
-        require(msg.sender == owner, "Only the owner can perform this action!");
-        _;
-    }
-
-    function mint(address _to, uint _amount) public onlyOwner {
-        balances[_to] += _amount;
-    }
-
-    function send(address _owner) public view returns (uint256) {
-        return balances[_owner];
+    function mint(address to, uint256 amount) public onlyOwner {
+        _mint(to, amount);
     }
 
 }

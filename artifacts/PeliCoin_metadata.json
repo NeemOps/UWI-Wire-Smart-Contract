@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.17+commit.8df45f5f"
+		"version": "0.8.9+commit.e5eed63a"
 	},
 	"language": "Solidity",
 	"output": {
@@ -407,7 +407,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/Pelicoin.sol": "PeliCoin"
+			"contracts\\Pelicoin.sol": "PeliCoin"
 		},
 		"evmVersion": "london",
 		"libraries": {},
@@ -461,12 +461,12 @@
 				"dweb:/ipfs/QmRK2Y5Yc6BK7tGKkgsgn3aJEQGi5aakeSPZvS65PV8Xp3"
 			]
 		},
-		"contracts/Pelicoin.sol": {
-			"keccak256": "0x05a9c91b6a8c951a78bd98c26e5e43079018fd7a54f00d284f727edaf60f9acb",
+		"contracts\\Pelicoin.sol": {
+			"keccak256": "0xfa753c8fd01615b81b0476e25deb364e543a3e6ea6a018609a56b2d0528dccc3",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://6112edfee6fb1270d51509950d47b44268384e4bc826d5e1161fe92e6807c5b8",
-				"dweb:/ipfs/QmcDod2TWy5scMXQPk4s3WQsrMWyUFuQnZBootGTNx4Rmo"
+				"bzz-raw://fbfd44004e6910b8f6013df67e0a0d2f19224660a80b43c4fa8b86d4d6eed758",
+				"dweb:/ipfs/QmQNEMXFy5ZpFWurEnNBAYPDvGYoHzXMMi7iLvutF7PXwZ"
 			]
 		}
 	},
