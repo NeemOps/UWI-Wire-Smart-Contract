@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract PeliCoin is ERC20, Ownable{
     
     constructor() ERC20("PeliCoin", "PLC") {
-        _mint(msg.sender, 25000 * 10 ** decimals());
+        _mint(msg.sender, 250 * 10 ** decimals());
     }
 
     function mint(address to, uint256 amount) public onlyOwner {
