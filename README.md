@@ -17,10 +17,10 @@ Once deployed, the contract will create a new ERC20 token with the symbol "PLC" 
     - Description: Constructor function to initialize the ERC20 token with the name "PeliCoin" and symbol "PLC".
 
 2. **mint(address to, uint256 amount)**
-Parameters:
-to (address): The address to mint the tokens to.
-amount (uint256): The amount of tokens to mint.
-Description: Mint a specified amount of PeliCoin tokens to the specified address. This function can only be called by the owner of the smart contract.
+- Parameters:
+    - **to (address)**: The address to mint the tokens to.
+    - **amount (uint256)**: The amount of tokens to mint.
+- Description: Mint a specified amount of PeliCoin tokens to the specified address. This function can only be called by the owner of the smart contract.
 ## Inherited Functions:
 PeliCoin inherits functions from the ERC20 and Ownable contracts. The following functions are available:
 
