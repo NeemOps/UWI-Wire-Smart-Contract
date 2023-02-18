@@ -11,7 +11,7 @@ To use this contract, you can deploy it on a compatible blockchain using a devel
 
 Once deployed, the contract will create a new ERC20 token with the symbol "PLC" and name "PeliCoin". The contract owner is the account that deployed the contract.
 
-## Functions:
+## Functions
 1. **constructor()**
     - Parameters: none
     - Description: Constructor function to initialize the ERC20 token with the name "PeliCoin" and symbol "PLC".
@@ -25,7 +25,7 @@ Once deployed, the contract will create a new ERC20 token with the symbol "PLC" 
     - Description: Mint a specified amount of PeliCoin tokens to the specified address. This function can only be called by the owner of the smart contract.
 
 
-## Inherited Functions:
+## Inherited Functions
 PeliCoin inherits functions from the ERC20 and Ownable contracts. The following functions are available:
 
 1. **ERC20**:
