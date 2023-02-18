@@ -12,12 +12,27 @@ contract("PeliCoin", (accounts) => {
     assert.equal(owner, accounts[0], "Owner is not accounts[0]");
   });
 
+
+  it("Owner should be able mint tokens", async function () {
+
+    await peliCoinInstance.mint(accounts[0], 200);
+    const owner_balance = await peliCoinInstance.balanceOf(accounts[0]);
+    assert.equal(owner_balance.toNumber(), 200, "Tokens not minted");
+  });
+
+
   it("Should transfer tokens from owner to accounts", async function () {
    
     // Transfer 50 tokens from owner to account 1
     await peliCoinInstance.transfer(accounts[1], 50);
     const account_1_balance = await peliCoinInstance.balanceOf(accounts[1]);
     assert.equal(account_1_balance.toNumber(), 50);
+  });
+
+
+  it("Should update owner balance after transactions", async function () {
+    const owner_balance = await peliCoinInstance.balanceOf(accounts[0]);
+    assert.equal(owner_balance.toNumber(), 150);
   });
 
 
@@ -34,36 +49,5 @@ contract("PeliCoin", (accounts) => {
 
     assert.equal(account_1_balance.toNumber(), 25);
     assert.equal(account_2_balance.toNumber(), 25);
-});
-
-
-
-
-
-     
-
-
-    // /* CHECKS IF BALANCE GET UPDATED AFTER TRANSFERS */
-    // it("Should update balances after transfers", async function () {
-
-    //   const peliCoinInstance = await PeliCoin.deployed();
-        
-    //   const initialOwnerBalance = await peliCoinInstance.balanceOf(owner.address);
-
-    //   // Transfer 100 tokens from owner to account 1.
-    //   await peliCoinInstance.transfer(accounts[0].address, 100);
-
-    //   // Transfer another 50 tokens from owner to account 2.
-    //   await peliCoinInstance.transfer(accounts[1].address, 50);
-
-    //   // Checking balances
-    //   const finalOwnerBalance = await peliCoinInstance.balanceOf(owner.address);
-    //   expect(finalOwnerBalance).to.equal(initialOwnerBalance.sub(150));
-
-    //   const account_1_balance = await peliCoinInstance.balanceOf(accounts[0].address);
-    //   expect(account_1_balance).to.equal(100);
-
-    //   const account_2_balance = await peliCoinInstance.balanceOf(accounts[1].address);
-    //   expect(account_2_balance).to.equal(50);
-    // });
+  });
 });
