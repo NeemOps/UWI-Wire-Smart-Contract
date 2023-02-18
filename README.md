@@ -13,11 +13,10 @@ Once deployed, the contract will create a new ERC20 token with the symbol "PLC" 
 
 ## Functions:
 1. **constructor()**
+    - Parameters: none
+    - Description: Constructor function to initialize the ERC20 token with the name "PeliCoin" and symbol "PLC".
 
-- Parameters: none
-- Description: Constructor function to initialize the ERC20 token with the name "PeliCoin" and symbol "PLC".
 2. **mint(address to, uint256 amount)**
-
 Parameters:
 to (address): The address to mint the tokens to.
 amount (uint256): The amount of tokens to mint.
