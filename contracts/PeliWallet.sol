@@ -1,18 +1,16 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-contract PeliWallet{
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-    address payable public owner;
+contract PeliWallet is Ownable{
 
-    constructor(){
-        owner = payable(msg.sender);
-    }
+
+    constructor(){}
 
     receive() external payable{} //special function
 
-    function withdraw(uint _amount) external{
-        require(msg.sender == owner, "Only owner can call this method");
+    function withdraw(uint _amount) external onlyOwner{
         payable(msg.sender).transfer(_amount);
     }
 
