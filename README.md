@@ -29,12 +29,12 @@ Once deployed, the contract will create a new ERC20 token with the symbol "PLC" 
 PeliCoin inherits functions from the ERC20 and Ownable contracts. The following functions are available:
 
 1. **ERC20**:
-
     - **balanceOf(address account) public view returns (uint256)**: Returns the balance of the specified address.
     - **transfer(address recipient, uint256 amount) public returns (bool)**: Transfer a specified amount of tokens to the specified recipient.
     - **allowance(address owner, address spender) public view returns (uint256)**: Returns the amount of tokens that the spender is allowed to spend on behalf of the owner.
     - **approve(address spender, uint256 amount) public returns (bool)**: Allow the spender to spend the specified amount of tokens on behalf of the caller.
     - **transferFrom(address sender, address recipient, uint256 amount) public returns (bool)**: Transfer a specified amount of tokens from the sender to the recipient. The spender must have been granted allowance to spend tokens on behalf of the sender.
+    
 2. **Ownable**:
     - **owner() public view returns (address)**: Returns the address of the owner of the smart contract.
     - **renounceOwnership() public onlyOwner**: Allows the current owner to renounce their ownership of the smart contract.
