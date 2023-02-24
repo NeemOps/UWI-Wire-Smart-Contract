@@ -1,3 +1,5 @@
+require('dotenv').config()
+const HDWalletProvider = require('@truffle/hdwallet-provider')
 /**
  * Use this file to configure your truffle project. It's seeded with some
  * common settings for different networks and features like migrations,
@@ -46,6 +48,12 @@
 
 // const HDWalletProvider = require('@truffle/hdwallet-provider');
 
+const private_keys = [
+  process.env.PRIVATE_KEY_0,
+  process.env.PRIVATE_KEY_1,
+  process.env.PRIVATE_KEY_2,
+  process.env.PRIVATE_KEY_3,
+]
 module.exports = {
   /**
    * Networks define how you connect to your ethereum client and let you set the
@@ -64,11 +72,11 @@ module.exports = {
     // tab if you use this network and you must also set the `host`, `port` and `network_id`
     // options below to some value.
     //
-    // development: {
-    //  host: "127.0.0.1",     // Localhost (default: none)
-    //  port: 8545,            // Standard Ethereum port (default: none)
-    //  network_id: "*",       // Any network (default: none)
-    // },
+    development: {
+     host: "127.0.0.1",     // Localhost (default: none)
+     port: 7545,            // Standard Ethereum port (default: none)
+     network_id: "*",       // Any network (default: none)
+    },
     //
     // An additional network, but with some advanced options…
     // advanced: {
@@ -82,13 +90,16 @@ module.exports = {
     //
     // Useful for deploying to a public network.
     // Note: It's important to wrap the provider as a function to ensure truffle uses a new provider every time.
-    // goerli: {
-    //   provider: () => new HDWalletProvider(MNEMONIC, `https://goerli.infura.io/v3/${PROJECT_ID}`),
-    //   network_id: 5,       // Goerli's id
-    //   confirmations: 2,    // # of confirmations to wait between deployments. (default: 0)
-    //   timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
-    //   skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
-    // },
+    goerli: {
+      provider: () => new HDWalletProvider({
+        privateKeys: private_keys,
+        providerOrUrl: 'https://goerli.infura.io/v3/f271881c4f45417c94d34edbd9543509',
+      }),
+      network_id: 5,       // Goerli's id
+      confirmations: 2,    // # of confirmations to wait between deployments. (default: 0)
+      timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
+      skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
+    },
     //
     // Useful for private networks
     // private: {
