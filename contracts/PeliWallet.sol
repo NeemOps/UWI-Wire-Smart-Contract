@@ -8,9 +8,11 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 contract PeliWallet is Ownable, Pausable {
     using SafeMath for uint256;
 
-    constructor() {}
+    uint256 constant BALANCE_LIMIT = 10 ether;
 
-    receive() external payable {}
+    constructor(){}
+
+    receive() external payable{}
 
     function withdraw(uint _amount) external onlyOwner whenNotPaused {
         require(address(this).balance >= _amount, "Insufficient balance in wallet");
@@ -20,7 +22,7 @@ contract PeliWallet is Ownable, Pausable {
     function deposit() external payable whenNotPaused {
         // use SafeMath to prevent overflow
         uint256 newBalance = address(this).balance.add(msg.value);
-        require(newBalance <= 10 ether, "Wallet balance limit reached");
+        require(newBalance <= BALANCE_LIMIT, "Wallet balance limit reached");
     }
 
     function getBalance() external view returns (uint256) {
