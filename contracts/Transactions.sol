@@ -1,46 +1,86 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.9;
+pragma solidity ^0.8.17;
 
-import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/Address.sol";
+
+contract Transactions is Ownable, ReentrancyGuard {
+    
+    using Address for address;
 
 
-contract Transactions is Ownable{
+    struct Transaction {
+        address from;
+        address to;
+        uint256 amount;
+        uint256 timestamp;
+    }
 
-    using SafeERC20 for IERC20;
 
+    Transaction[] public transactionHistory;    // Transaction History
     IERC20 private pelicoin;
 
-    event TokensReceived(address indexed from, uint256 amount);
-    event TokensSent(address indexed to, uint256 amount);
-    event TokensWithdrawn(uint256 amount);
 
     constructor(address pelicoinAddress){
         pelicoin = IERC20(pelicoinAddress);
     }
 
-    function receiveTokens(uint256 amount) external{
-        pelicoin.safeTransferFrom(msg.sender, address(this), amount);
-        emit TokensReceived(msg.sender, amount);
+
+    // Receive Pelicoin tokens
+    function receiveTokens(uint256 amount) external nonReentrant {
+
+        require(amount > 0, "Amount must be greater than zero");
+        pelicoin.transferFrom(msg.sender, address(this), amount);
+
+        transactionHistory.push(Transaction(msg.sender, address(this), amount, block.timestamp));
     }
 
-    function sendTokens(address to, uint256 amount) external onlyOwner{
-        pelicoin.safeTransfer(to, amount);
-        emit TokensSent(to, amount);
+    // Send Pelicoin tokens to another address
+    function sendTokens(address to, uint256 amount) external onlyOwner nonReentrant {
+
+        require(to != address(0), "Invalid recipient address");
+        require(to != address(this));
+
+        pelicoin.transfer(to, amount);
+
+        transactionHistory.push(Transaction(address(this), to, amount, block.timestamp));
     }
 
-    function withdrawTokens(uint256 amount) external onlyOwner{
+
+    // Withdraw Pelicoin tokens to the owner of the smart contract
+    function withdrawTokens(uint256 amount) external onlyOwner nonReentrant {
+
         require(amount <= pelicoin.balanceOf(address(this)), "Insufficient balance");
-        pelicoin.safeTransfer(owner(), amount);
-        emit TokensWithdrawn(amount);
-    }
+        pelicoin.transfer(owner(), amount);
 
+        transactionHistory.push(Transaction(address(this), owner(), amount, block.timestamp));
+    } 
+
+
+    // Balance in the smart contract
     function balanceOf() external view returns (uint256){
         return pelicoin.balanceOf(address(this));
     }
 
+
+    // Get Pelicoin token address
     function getTokenAddress() external view returns (address){
         return address(pelicoin);
+    }
+
+
+    // Amount of transactions in the transaction history
+    function getTransactionHistoryLength() external view returns (uint256){
+        return transactionHistory.length;
+    }
+
+
+    // Get transaction at the given index
+    function getTransaction(uint256 index) external view returns (Transaction memory){
+        require(index < transactionHistory.length, "Invalid transaction index");
+        return transactionHistory[index];
     }
 }
