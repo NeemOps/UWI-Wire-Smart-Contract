@@ -1,0 +1,28 @@
+Transactions
+
+The Transactions contract provides functions to receive, send, and withdraw tokens of an ERC20 token.
+
+Modifiers:
+
+onlyOwner: Restricts the function to be called only by the contract owner.
+Functions:
+
+constructor(address pelicoinAddress): Initializes the contract and sets the address of the ERC20 token.
+
+receiveTokens(uint256 amount): Allows users to transfer the specified amount of tokens to the contract. Emits a TokensReceived event with the sender's address and the transferred amount.
+
+sendTokens(address to, uint256 amount): Allows the owner to transfer the specified amount of tokens to the given address. Emits a TokensSent event with the receiver's address and the transferred amount.
+
+withdrawTokens(uint256 amount): Allows the owner to withdraw the specified amount of tokens from the contract. The contract must have a sufficient balance of tokens. Emits a TokensWithdrawn event with the withdrawn amount.
+
+balanceOf(): Returns the balance of the ERC20 token held by the contract.
+
+getTokenAddress(): Returns the address of the ERC20 token used by the contract.
+
+Events:
+
+TokensReceived(address indexed from, uint256 amount): Emitted when tokens are received by the contract. from is the address of the sender and amount is the amount of tokens transferred.
+
+TokensSent(address indexed to, uint256 amount): Emitted when tokens are sent by the contract owner. to is the address of the receiver and amount is the amount of tokens transferred.
+
+TokensWithdrawn(uint256 amount): Emitted when tokens are withdrawn by the contract owner. amount is the amount of tokens withdrawn.

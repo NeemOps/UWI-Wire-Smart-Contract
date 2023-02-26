@@ -1,32 +1,38 @@
-// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
-import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
-contract PeliWallet is Ownable, Pausable {
-    using SafeMath for uint256;
+contract TokenWallet is Ownable, Pausable {
+    using SafeERC20 for IERC20;
 
-    uint256 constant BALANCE_LIMIT = 10 ether;
+    Transactions private _transactions;
 
-    constructor(){}
+    event Deposit(address indexed from, uint256 value);
+    event Withdrawal(address indexed to, uint256 value);
 
-    receive() external payable{}
-
-    function withdraw(uint _amount) external onlyOwner whenNotPaused {
-        require(address(this).balance >= _amount, "Insufficient balance in wallet");
-        payable(msg.sender).transfer(_amount);
+    constructor(address transactionsAddress) {
+        _transactions = Transactions(transactionsAddress);
     }
 
-    function deposit() external payable whenNotPaused {
-        // use SafeMath to prevent overflow
-        uint256 newBalance = address(this).balance.add(msg.value);
-        require(newBalance <= BALANCE_LIMIT, "Wallet balance limit reached");
+    function deposit(uint256 value) external whenNotPaused {
+        _transactions.receiveTokens(value);
+        emit Deposit(msg.sender, value);
     }
 
-    function getBalance() external view returns (uint256) {
-        return address(this).balance;
+    function withdraw(uint256 value) external whenNotPaused onlyOwner {
+        _transactions.sendTokens(msg.sender, value);
+        emit Withdrawal(msg.sender, value);
+    }
+
+    function balanceOf() external view returns (uint256) {
+        return _transactions.balanceOf();
+    }
+
+    function getTokenAddress() external view returns (address) {
+        return _transactions.getTokenAddress();
     }
 
     function pause() external onlyOwner {
