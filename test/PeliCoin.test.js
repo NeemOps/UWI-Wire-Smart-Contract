@@ -39,10 +39,10 @@ contract("PeliCoin", (accounts) => {
   it("Should transfer tokens between accounts", async function () {
    
     // Approve account 2 to spend 50 tokens from account 1
-    await peliCoinInstance.approve(accounts[2], 50, {from: accounts[1]});
+    // await peliCoinInstance.approve(accounts[2], 50, {from: accounts[1]});
 
     // Transfer 25 tokens from account 1 to account 2
-    await peliCoinInstance.transferFrom(accounts[1], accounts[2], 25, {from: accounts[2]});
+    await peliCoinInstance._transferFrom(accounts[1], accounts[2], 25, {from: accounts[1]});
 
     const account_1_balance = await peliCoinInstance.balanceOf(accounts[1]);
     const account_2_balance = await peliCoinInstance.balanceOf(accounts[2]);

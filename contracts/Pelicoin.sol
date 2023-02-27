@@ -12,4 +12,10 @@ contract PeliCoin is ERC20, Ownable{
         _mint(to, amount);
     }
 
+    function _transferFrom(address from, address to, uint256 amount) external{
+        require((from == msg.sender) || (msg.sender == owner()));
+        approve(to, amount);
+        transferFrom(from, to, amount);
+    }
+
 }
