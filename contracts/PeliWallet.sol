@@ -44,11 +44,7 @@ contract TokenWallet is Ownable, Pausable {
         return _transactions.getTokenAddress();
     }
 
-    function pause() external onlyOwner {
-        _pause();
-    }
+    function pause() external onlyOwner { _pause(); }
 
-    function unpause() external onlyOwner {
-        _unpause();
-    }
+    function unpause() external onlyOwner { _unpause(); }
 }
