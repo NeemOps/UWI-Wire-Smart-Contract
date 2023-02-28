@@ -12,52 +12,35 @@ contract PeliWallet is Ownable, Pausable {
 
     using Address for address;
 
-    event Deposited(address indexed from, uint256 value);
-    event Sent(address indexed to, uint256 value);
+
+    event Transferred(address indexed to, uint256 value);
     event Withdrawn(uint256 value);
 
 
-    mapping(address => uint256) private _balances;
+    // Transfer Pelicoin tokens
+    function transferTokens(IERC20 pelicoin, address to, uint256 amount) external onlyOwner {
+       
+        require(to != address(0), "PeliWallet: recipient cannot be zero address");
+        require(amount > 0, "PeliWallet: amount must be greater than zero");
 
-
-    // Receive Pelicoin tokens
-    function deposit(IERC20 pelicoin, uint256 amount) external whenNotPaused {
-
-        require(amount > 0, "Amount must be greater than zero");
-
-        pelicoin.transferFrom(msg.sender, address(this), amount);
-        _balances[msg.sender] += amount;
-
-        emit Deposited(msg.sender, amount);
-    }
-
-
-    // Send Pelicoin tokens
-    function send(IERC20 pelicoin, address to, uint256 amount) external whenNotPaused{
-
-        require(to != address(0), "Invalid recipient address");
-
-        pelicoin.transfer(to, amount);
-        _balances[msg.sender] -= amount;
-
-        emit Sent(to, amount);
+        pelicoin.transferFrom(msg.sender, to, amount);
+        require(pelicoin.transfer(to, amount), "PeliWallet: Transfer Failed");
+        emit Transferred(to, amount);
     }
 
 
     // Withdraw Pelicoin tokens
-    function withdraw(IERC20 pelicoin, uint256 amount) external whenNotPaused onlyOwner{
+    function withdraw(IERC20 token, uint256 amount) external whenNotPaused onlyOwner{
         
-        require(amount <= _balances[msg.sender], "Insufficient balance");
+        require(amount <= token.balanceOf(msg.sender), "PeliWallet: Insufficient balance");
        
-        pelicoin.transfer(msg.sender, amount);
-        _balances[msg.sender] -= amount;
-
+        token.transfer(msg.sender, amount);
         emit Withdrawn(amount);
     }
 
 
-    function balanceOf(address account) external view returns (uint256){
-        return _balances[account];
+    function balanceOf(IERC20 token, address account) external view returns (uint256){
+        return token.balanceOf(account);
     }
 
     function pause()   external onlyOwner { _pause(); }
