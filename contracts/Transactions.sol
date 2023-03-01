@@ -2,7 +2,7 @@
 pragma solidity ^0.8.17;
 
 
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+// import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
@@ -30,27 +30,26 @@ contract Transactions is Ownable, Pausable{
         require(amount > 0,         "Transactions: amount must be greater than zero");
 
         Transaction memory transaction = Transaction(from, to, amount, block.timestamp);
-        transactionHistory[from].push(transaction);
-        transactionHistory[to].push(transaction);
+        transactionHistory[msg.sender].push(transaction);
     }
 
 
     // Amount of transactions in the transaction history
-    function getTransactionHistoryLength(address account) external view returns (uint256){
-        return transactionHistory[account].length;
+    function getTransactionHistoryLength() external view returns (uint256){
+        return transactionHistory[msg.sender].length;
     }
 
     // Get transaction history
-    function getTransactionHistory(address account) external view returns (Transaction[] memory){
-        return transactionHistory[account];
+    function getTransactionHistory() external view returns (Transaction[] memory){
+        return transactionHistory[msg.sender];
     }
 
     // Get transaction at index
-    function getTransaction(address account, uint256 index) external view returns (Transaction memory){
+    function getTransaction(uint256 index) external view returns (Transaction memory){
         
-        require(index < transactionHistory[account].length, "Transactions: index too high");
+        require(index < transactionHistory[msg.sender].length, "Transactions: index too high");
 
-        return transactionHistory[account][index];
+        return transactionHistory[msg.sender][index];
     }
 
 

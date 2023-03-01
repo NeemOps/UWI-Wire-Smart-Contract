@@ -44,6 +44,12 @@ contract PeliWalletFacade is Ownable, Pausable, ReentrancyGuard{
             transactionsManager.createTransaction(address(this), to, amount);
         }
 
+        // Update transaction history
+        function addTransaction(address from, address to, uint256 amount) external 
+        whenNotPaused onlyOwner nonReentrant{
+            transactionsManager.createTransaction(from, to, amount);
+        }
+
         // Withdraws ERC20 tokens to owner account
         function withdrawTokens(IERC20 token, uint256 amount) public whenNotPaused onlyOwner nonReentrant{
             peliWallet.withdraw(token, amount);
@@ -59,17 +65,17 @@ contract PeliWalletFacade is Ownable, Pausable, ReentrancyGuard{
 
         // Gets the amount of transactions in the transaction history
         function getTransactionsLength() external view returns (uint256){
-            return transactionsManager.getTransactionHistoryLength(address(this));
+            return transactionsManager.getTransactionHistoryLength();
         }
 
         // Gets the transaction from the transaction history at location "index"
          function getTransaction(uint256 index) external view returns (Transactions.Transaction memory){
-            return transactionsManager.getTransaction(address(this), index);
+            return transactionsManager.getTransaction(index);
         }
 
         // Gets the transaction history
         function getTransactionHistory() external view returns (Transactions.Transaction[] memory){
-            return transactionsManager.getTransactionHistory(address(this));
+            return transactionsManager.getTransactionHistory();
         }
 
     
