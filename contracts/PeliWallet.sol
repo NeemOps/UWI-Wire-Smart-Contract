@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
+
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
@@ -8,7 +9,7 @@ import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 
 
-contract PeliWallet is Ownable, Pausable {
+contract PeliWallet is Ownable, Pausable{
 
     using Address for address;
 
@@ -18,7 +19,7 @@ contract PeliWallet is Ownable, Pausable {
 
 
     // Transfer Pelicoin tokens
-    function transferTokens(IERC20 pelicoin, address to, uint256 amount) external onlyOwner {
+    function transferTokens(IERC20 pelicoin, address to, uint256 amount) external whenNotPaused onlyOwner {
        
         require(to != address(0), "PeliWallet: recipient cannot be zero address");
         require(amount > 0, "PeliWallet: amount must be greater than zero");
