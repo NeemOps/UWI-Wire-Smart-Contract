@@ -1,5 +1,5 @@
 var PeliWalletFacade = artifacts.require("PeliWalletFacade");
 
 module.exports = function(deployer) {
-  deployer.deploy(PeliWalletFacade, "0x493B20eD28A3F59Ee11cf80B7cF98b7e7D92fcB1");
+  deployer.deploy(PeliWalletFacade, "0x78c2802caf58F7302dDA14fc66274Fff485B6Fa2");
 };
