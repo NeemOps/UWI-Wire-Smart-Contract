@@ -55,6 +55,13 @@ const private_keys = [
   process.env.PRIVATE_KEY_3,
 ]
 module.exports = {
+
+  plugins: ['truffle-plugin-verify'],
+
+  api_keys: {
+    etherscan: process.env.MY_API_KEY,
+  },
+  
   /**
    * Networks define how you connect to your ethereum client and let you set the
    * defaults web3 uses to send transactions. If you don't specify one truffle
@@ -100,6 +107,7 @@ module.exports = {
       timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
       skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
     },
+    
     //
     // Useful for private networks
     // private: {
