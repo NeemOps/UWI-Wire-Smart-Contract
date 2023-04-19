@@ -4,6 +4,7 @@ contract("PeliCoin", (accounts) => {
 
   before(async () => {
     peliCoinInstance = await PeliCoin.deployed();
+
   });
 
 

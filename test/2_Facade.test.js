@@ -64,4 +64,5 @@ contract("PeliWalletFacade", (accounts) => {
     assert.equal(transaction_2.amount, 50);
   });
 
+
 });

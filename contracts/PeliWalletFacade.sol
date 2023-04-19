@@ -2,22 +2,24 @@
 pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/Address.sol";
 
-import "./PeliWallet.sol";
 import "./Transactions.sol";
 
 
 contract PeliWalletFacade is Ownable, Pausable, ReentrancyGuard{
+
+    using Address for address;
    
-    PeliWallet private peliWallet;
+    // PeliWallet private peliWallet;
     Transactions private transactionsManager;
     IERC20 private pelicoin; 
 
 
     constructor(address pelicoinAddress){
-        peliWallet = new PeliWallet();
         transactionsManager = new Transactions();
         pelicoin = IERC20(pelicoinAddress);
     }
@@ -38,9 +40,9 @@ contract PeliWalletFacade is Ownable, Pausable, ReentrancyGuard{
          
             require(to != address(0), "PeliWallet: recipient cannot be zero address");
             require(amount > 0,       "PeliWallet: amount must be greater than zero");
-            
-            require(pelicoin.transfer(to, amount), "PeliWalletFacade: Transfer Failed");
-            // peliWallet.transferTokens(pelicoin, to, amount);
+    
+            require(pelicoin.transfer(to, amount), "PeliWallet: Transfer Failed");
+     
             transactionsManager.createTransaction(address(this), to, amount);
         }
 
@@ -50,14 +52,9 @@ contract PeliWalletFacade is Ownable, Pausable, ReentrancyGuard{
             transactionsManager.createTransaction(from, to, amount);
         }
 
-        // Withdraws ERC20 tokens to owner account
-        function withdrawTokens(IERC20 token, uint256 amount) public whenNotPaused onlyOwner nonReentrant{
-            peliWallet.withdraw(token, amount);
-        }
-
         // Gets pelicoin balance
         function getBalance() external view returns (uint256){
-            return peliWallet.balanceOf(pelicoin, address(this));
+            return pelicoin.balanceOf(address(this));
         }
 
 
