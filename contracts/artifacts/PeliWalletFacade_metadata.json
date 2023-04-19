@@ -276,24 +276,6 @@
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "contract IERC20",
-						"name": "token",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					}
-				],
-				"name": "withdrawTokens",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
 			}
 		],
 		"devdoc": {
@@ -392,20 +374,12 @@
 				"dweb:/ipfs/QmQJquTMtc6fgm5JQzGdsGpA2fqBe3MHWEdt2qzaLySMdN"
 			]
 		},
-		"contracts/PeliWallet.sol": {
-			"keccak256": "0x3646f1bfcf23c670f8c776695077ed13e8e150a38c1aaff2753bf6fa8d7e360f",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://4c87f9d0b904b012f63388893739d42ae55b9ab84891558d006a58cc3f8321c5",
-				"dweb:/ipfs/QmbamEnRkMZXgmh2Q5crCEWWxXdTFH6azhADcPBSGQhUd9"
-			]
-		},
 		"contracts/PeliWalletFacade.sol": {
-			"keccak256": "0xaa469b1946dd0c7557c950bf4d9bc56aa970658c8bceebeddb3e75321bed3f0e",
+			"keccak256": "0x219d58a81742a158b4260236c3624ba97cbd3292f4ca5bac9b4555b16ef5d158",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://fb6e283ae3ca072fbf35cd92eb92779eb30ea4b25bc9c913bbabfaaabf7b6034",
-				"dweb:/ipfs/QmVFGBTxsYir4AJ29UFJYQLawAaL5o1asD9JQm7t4iR53J"
+				"bzz-raw://d709208239156d42385395c80fd7271e12afbb8bc8ae5c4f71944eb0f4003ca2",
+				"dweb:/ipfs/QmSFwrWjxEQ4JE4Z3z22gF1Kbtb762BVVZiavZkaP7FLTm"
 			]
 		},
 		"contracts/Transactions.sol": {
